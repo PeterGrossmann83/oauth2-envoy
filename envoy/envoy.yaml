@@ -1,0 +1,74 @@
+static_resources:
+  listeners:
+    - address:
+        socket_address:
+          address: 0.0.0.0
+          port_value: 80
+      filter_chains:
+        - filters:
+            - name: envoy.http_connection_manager
+              config:
+                codec_type: auto
+                stat_prefix: ingress_http
+                route_config:
+                  name: local_route
+                  virtual_hosts:
+                    - name: service
+                      domains:
+                        - "*"
+                      routes:
+                        - match:
+                            prefix: "/"
+                          route:
+                            cluster: hello_world
+                http_filters:
+                  - name: envoy.filters.http.jwt_authn
+                    config:
+                      providers:
+                        id-server:
+                          issuer: http://localhost:5001
+                          forward: true
+                          remote_jwks:
+                            http_uri:
+                              uri: http://localhost:5001/.well-known/openid-configuration/jwks
+                              cluster: id_server_cluster
+                      rules:
+                        - match:
+                            prefix: "/"
+                          requires:
+                            provider_name: id-server
+                  - name: envoy.router
+                    typed_config: {}
+  clusters:
+    - name: hello_world
+      connect_timeout: 15s
+      type: strict_dns
+      lb_policy: round_robin
+      load_assignment:
+        cluster_name: hello_world
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: httpd
+                      port_value: 80
+    - name: id_server_cluster
+      connect_timeout: 15s
+      type: strict_dns
+      lb_policy: round_robin
+      load_assignment:
+        cluster_name: id_server_cluster
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: id_server
+                      port_value: 5000
+admin:
+  access_log_path: "/dev/stdout"
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 8081
