@@ -19,7 +19,7 @@ If you enter the following command on your bash 'curl -v localhost:1234', you wi
 This is because the envoy-proxy cannot validate the request. The client has not a valid JWT-token yet.
 
 ### Get the access token
-In bash call 'curl -v -X POST -H 'Content-Type: application/x-www-form-urlencoded;charset=UTF-8' -k -d "grant_type=password&usernamgrant_type=password&username=test&password=test&scope=openid&client_id=local.client&client_secret=secret" 'http://localhost:5000/connect/token'
+In bash call 'curl -v -X POST -H 'Content-Type: application/x-www-form-urlencoded;charset=UTF-8' -k -d "grant_type=password&username=test&password=test&scope=openid&client_id=local.client&client_secret=secret" 'http://localhost:5000/connect/token'
 The response will be a JSON-String containing the access-token.
 Copy the access token to your clipboard.
 
