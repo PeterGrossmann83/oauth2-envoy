@@ -23,6 +23,6 @@ In bash call 'curl -v -X POST -H 'Content-Type: application/x-www-form-urlencode
 The response will be a JSON-String containing the access-token.
 Copy the access token to your clipboard.
 
-### Use the acces token to send second request to service
-in bash call 'curl -v -H 'Accept: application/json' -H "Authorization: Bearer **your_accesstoken**" http://localhost:1234'
+### Use the access token to send second request to service
+in bash call 'curl -v -H 'Accept: application/json' -H "Authorization: Bearer **your_accesstoken**" http://localhost:1234''
 You will get a response of http '200 ok' with html-title 'Hello World', because now your client is authenticated.
