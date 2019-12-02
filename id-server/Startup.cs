@@ -46,7 +46,7 @@ namespace IdServer
 
             var builder = services.AddIdentityServer(options =>
             {
-                options.IssuerUri = "http://localhost:5001";
+                options.IssuerUri = "http://id-server-service:5000";
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
