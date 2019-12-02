@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-world
-  namespace: envoy-example
+  namespace: envoy-auth
 spec:
   replicas: 1
   selector:

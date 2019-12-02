@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-world-service
-  namespace: envoy-example
+  namespace: envoy-auth
 spec:
   type: NodePort
   selector:
