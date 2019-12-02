@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+  namespace: envoy-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: hello-world
+  template:
+    metadata:
+      labels:
+        name: hello-world
+    spec:
+      containers:
+        - name: hello-world-container
+          image: petergrossmann83/oauth2-httpd:0.1
+          ports:
+            - containerPort: 80
+              protocol: TCP
+        - name: envoy
+          image: petergrossmann83/oauth2-envoy:latest
+          ports:
+            - containerPort: 8786
+              protocol: TCP

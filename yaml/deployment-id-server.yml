@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: id-server
+  namespace: envoy-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: id-server
+  template:
+    metadata:
+      labels:
+        name: id-server
+    spec:
+      containers:
+        - name: id-server-container
+          image: petergrossmann83/oauth2-id-server:latest
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://*:5000
+          ports:
+            - containerPort: 5000
+              protocol: TCP

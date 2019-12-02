@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-service
+  namespace: envoy-example
+spec:
+  type: NodePort
+  selector:
+    name: hello-world
+  ports:
+    - port: 1234
+      targetPort: 8786
